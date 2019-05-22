@@ -9,3 +9,9 @@ def home(request):
     首页
     """
     return render(request, 'home_application/home.html')
+def hello(request):
+    return HttpResponse('Hello World!')
+def params_test(request):
+    str=request.GET.get('str','')
+    page=request.GET['page']
+    return HttpResponse('str='+str+'&page='+page)

@@ -18,5 +18,7 @@ from django.conf.urls import url
 from home_application import views
 
 urlpatterns = (
-    url(r'^$', views.home),
+    #url(r'^$', views.home),
+                  url(r'^params_test/$',params_test)，
+                  url(r'^$', views.hello),
 )
