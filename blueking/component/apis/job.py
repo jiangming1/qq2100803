@@ -13,6 +13,11 @@ class CollectionsJOB(object):
             path='/api/c/compapi{bk_api_ver}/job/execute_job/',
             description=u'启动作业'
         )
+        self.fast_execute_sql = ComponentAPI(
+            client=self.client, method='POST',
+            path='/api/c/compapi{bk_api_ver}/job/fast_execute_sql/',
+            description=u'快速执行SQL脚本'
+        )
         self.get_cron_list = ComponentAPI(
             client=self.client, method='GET',
             path='/api/c/compapi{bk_api_ver}/job/get_cron_list/',
@@ -38,10 +43,25 @@ class CollectionsJOB(object):
             path='/api/c/compapi{bk_api_ver}/job/get_job_list/',
             description=u'查询作业模板'
         )
+        self.get_os_account = ComponentAPI(
+            client=self.client, method='GET',
+            path='/api/c/compapi{bk_api_ver}/job/get_os_account/',
+            description=u'查询业务下的执行账号'
+        )
         self.get_own_db_account_list = ComponentAPI(
             client=self.client, method='GET',
             path='/api/c/compapi{bk_api_ver}/job/get_own_db_account_list/',
             description=u'查询用户有权限的DB帐号列表'
+        )
+        self.get_script_detail = ComponentAPI(
+            client=self.client, method='GET',
+            path='/api/c/compapi{bk_api_ver}/job/get_script_detail/',
+            description=u'查询脚本详情'
+        )
+        self.get_script_list = ComponentAPI(
+            client=self.client, method='GET',
+            path='/api/c/compapi{bk_api_ver}/job/get_script_list/',
+            description=u'查询脚本列表'
         )
         self.update_cron_status = ComponentAPI(
             client=self.client, method='POST',

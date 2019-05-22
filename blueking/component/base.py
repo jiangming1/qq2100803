@@ -33,7 +33,7 @@ class ComponentAPI(object):
         self.url = self.get_url_with_api_ver()
         try:
             return self._call(*args, **kwargs)
-        except ComponentAPIException, e:
+        except ComponentAPIException as e:
             # Combine log message
             log_message = [e.error_message, ]
             log_message.append('url=%(url)s' % {'url': e.api_obj.url})
@@ -46,7 +46,7 @@ class ComponentAPI(object):
             if e.resp is not None:
                 try:
                     return e.resp.json()
-                except:
+                except Exception:
                     pass
             return {'result': False, 'message': e.error_message, 'data': None}
 
@@ -68,7 +68,7 @@ class ComponentAPI(object):
         # Request remote server
         try:
             resp = self.client.request(self.method, self.url, params=params, data=data)
-        except Exception, e:
+        except Exception as e:
             logger.exception('Error occurred when requesting method=%s url=%s',
                              self.method, self.url)
             raise ComponentAPIException(self, u'Request component error, Exception: %s' % str(e))
@@ -97,6 +97,6 @@ class ComponentAPI(object):
             if not json_resp and self.default_return_value is not None:
                 return self.default_return_value
             return json_resp
-        except:
+        except Exception:
             raise ComponentAPIException(
                 self, 'Return data format is incorrect, which shall be unified as json', resp=resp)

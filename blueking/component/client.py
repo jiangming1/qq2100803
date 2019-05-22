@@ -6,8 +6,8 @@ import json
 import time
 import random
 import logging
-import urlparse
 
+from .compat import urlparse
 from . import conf
 from . import collections
 from .utils import get_signature
@@ -15,7 +15,7 @@ from .utils import get_signature
 # shutdown urllib3's warning
 try:
     requests.packages.urllib3.disable_warnings()
-except:
+except Exception:
     pass
 
 
@@ -59,7 +59,7 @@ class BaseComponentClient(object):
         try:
             from django.utils import translation
             return translation.get_language()
-        except:
+        except Exception:
             return None
 
     def set_bk_api_ver(self, bk_api_ver):
@@ -96,6 +96,7 @@ class BaseComponentClient(object):
 
         params, data = self.merge_params_data_with_common_args(method, params, data, enable_app_secret=True)
         logger.debug('Calling %s %s with params=%s, data=%s, headers=%s', method, url, params, data, headers)
+
         return requests.request(method, url, params=params, data=data, verify=False,
                                 headers=headers, **kwargs)
 
@@ -126,7 +127,7 @@ class ComponentClientWithSignature(BaseComponentClient):
         if method == 'POST':
             params = {}
 
-        url_path = urlparse.urlparse(url).path
+        url_path = urlparse(url).path
         # signature always in GET params
         params.update({
             'bk_timestamp': int(time.time()),
